@@ -36,7 +36,7 @@
     <properties>
         <kotlin.version>1.0.4</kotlin.version>
 
-        <java.target.version>1.8</java.target.version>
+        <java.target.version>1.7</java.target.version>
         <java.source.version>1.8</java.source.version>
 
         <!--eclipse collections-->
