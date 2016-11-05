@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public abstract class SerializerEightByte<E> implements GroupSerializer<E> {
+public abstract class SerializerEightByte<E> extends GroupSerializerBase<E> {
 
     protected abstract E unpack(long l);
     protected abstract long pack(E l);

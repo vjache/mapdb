@@ -6,6 +6,7 @@ import org.eclipse.collections.impl.set.mutable.primitive.LongHashSet
 import org.eclipse.collections.impl.stack.mutable.primitive.LongArrayStack
 import org.mapdb.BTreeMapJava.*
 import org.mapdb.serializer.GroupSerializer
+import org.mapdb.serializer.GroupSerializerBase
 import java.io.Closeable
 import java.io.ObjectStreamException
 import java.io.PrintStream
@@ -124,7 +125,7 @@ class BTreeMap<K,V>(
         }
 
 
-        internal val NO_VAL_SERIALIZER = object: GroupSerializer<Boolean>{
+        internal val NO_VAL_SERIALIZER = object: GroupSerializerBase<Boolean>(){
 
             override fun valueArrayCopyOfRange(vals: Any?, from: Int, to: Int): Int? {
                 return to-from;

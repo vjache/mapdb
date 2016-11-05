@@ -10,7 +10,7 @@ import java.util.Comparator;
 /**
  * Created by jan on 2/28/16.
  */
-public class SerializerByteArray implements GroupSerializer<byte[]> {
+public class SerializerByteArray extends GroupSerializerBase<byte[]> {
 
     private static final XXHash32 HASHER = CC.HASH_FACTORY.hash32();
 

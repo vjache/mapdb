@@ -53,7 +53,7 @@ open class DB(
 
     companion object{
 
-        protected val NAME_CATALOG_SERIALIZER:Serializer<SortedMap<String, String>> = object:Serializer<SortedMap<String, String>>{
+        protected val NAME_CATALOG_SERIALIZER:Serializer<SortedMap<String, String>> = object:SerializerBase<SortedMap<String, String>>(){
 
             override fun deserialize(input: DataInput2, available: Int): SortedMap<String, String>? {
                 val size = input.unpackInt()
@@ -280,7 +280,7 @@ open class DB(
     //fun <E> getDefaultSerializer() = defaultSerializer as GroupSerializer<E>
 
 
-    protected val classInfoSerializer = object : Serializer<Array<ClassInfo>> {
+    protected val classInfoSerializer = object : SerializerBase<Array<ClassInfo>>() {
 
         override fun serialize(out: DataOutput2, ci: Array<ClassInfo>) {
             out.packInt(ci.size)

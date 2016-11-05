@@ -12,7 +12,7 @@ import java.util.Comparator;
 /**
  * Created by jan on 2/29/16.
  */
-public class SerializerStringDelta2 implements  GroupSerializer<String> {
+public class SerializerStringDelta2 extends  GroupSerializerBase<String> {
 
     public interface StringArrayKeys {
 

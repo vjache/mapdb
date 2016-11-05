@@ -11,7 +11,7 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 /** wraps another serializer and (de)compresses its output/input using Deflate*/
-public final class SerializerCompressionDeflateWrapper<E> implements GroupSerializer<E>, Serializable {
+public final class SerializerCompressionDeflateWrapper<E> extends GroupSerializerBase<E> implements Serializable {
 
     private static final long serialVersionUID = 8529699349939823553L;
     protected final GroupSerializer<E> serializer;

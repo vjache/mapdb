@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class SerializerString implements GroupSerializer<String> {
+public class SerializerString extends GroupSerializerBase<String> {
 
     @Override
     public void serialize(DataOutput2 out, String value) throws IOException {

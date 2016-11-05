@@ -13,7 +13,7 @@ class IndexTreeListJava {
 
     static final long full = 0xFFFFFFFFFFFFFFFFL;
 
-    static final Serializer<long[]> dirSer =  new Serializer<long[]>() {
+    static final Serializer<long[]> dirSer =  new SerializerBase<long[]>() {
         @Override
         public void serialize(DataOutput2 out, long[] value) throws IOException {
 
@@ -196,42 +196,44 @@ class IndexTreeListJava {
     private static long treeGetBinary(final int dirShift, long recid, StoreBinary binStore, int level, final long index) {
         for (; level>= 0;) {
             final int level2 = level;
-            StoreBinaryGetLong f = (input, size) -> {
-                long bitmap1 = input.readLong();
-                long bitmap2 = input.readLong();
+            StoreBinaryGetLong f = new StoreBinaryGetLong() {
+                public long get(DataInput2 input, int size) throws IOException {
+                    long bitmap1 = input.readLong();
+                    long bitmap2 = input.readLong();
 
-                //index
-                int dirPos = dirOffsetFromLong(bitmap1, bitmap2, treePos(dirShift, level2, index));
-                if(dirPos<0){
-                    //not set
-                    return 0L;
+                    //index
+                    int dirPos = dirOffsetFromLong(bitmap1, bitmap2, treePos(dirShift, level2, index));
+                    if (dirPos < 0) {
+                        //not set
+                        return 0L;
+                    }
+
+                    //second value is index, it is delta packed and can not be skipped, reenable binaryGet once its supported
+
+                    //skip until offset
+                    //input.unpackLongSkip(dirPos-2);
+                    long oldIndex = 0;
+                    for (int i = 0; i < (dirPos - 2) / 2; i++) {
+                        input.unpackLong();
+                        oldIndex += input.unpackLong();
+                    }
+
+                    long recid1 = input.unpackLong();
+                    if (recid1 == 0)
+                        return 0L; //TODO this should not be here, if tree collapse exist
+
+                    oldIndex += input.unpackLong() - 1;
+
+                    if (oldIndex == index) {
+                        //found it, return value (recid)
+                        return recid1;
+                    } else if (oldIndex != -1) {
+                        // there is wrong index stored here, given index is not found
+                        return 0L;
+                    }
+
+                    return -recid1; //continue
                 }
-
-                //second value is index, it is delta packed and can not be skipped, reenable binaryGet once its supported
-
-                //skip until offset
-                //input.unpackLongSkip(dirPos-2);
-                long oldIndex=0;
-                for(int i=0; i<(dirPos-2)/2;i++){
-                    input.unpackLong();
-                    oldIndex += input.unpackLong();
-                }
-                
-                long recid1 = input.unpackLong();
-                if(recid1 ==0)
-                    return 0L; //TODO this should not be here, if tree collapse exist
-
-                oldIndex += input.unpackLong()-1;
-
-                if (oldIndex == index) {
-                    //found it, return value (recid)
-                    return recid1;
-                }else  if (oldIndex != -1) {
-                    // there is wrong index stored here, given index is not found
-                    return 0L;
-                }
-
-                return -recid1; //continue
             };
 
 

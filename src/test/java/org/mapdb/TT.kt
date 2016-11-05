@@ -94,7 +94,7 @@ object TT{
     }
 
 
-    object Serializer_ILLEGAL_ACCESS: Serializer<Any> {
+    object Serializer_ILLEGAL_ACCESS: SerializerBase<Any>() {
         override fun serialize(out: DataOutput2, value: Any) {
             throw AssertionError("Should not access this serializer")
         }

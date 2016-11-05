@@ -527,9 +527,7 @@ public interface Serializer<A /*extends Comparable<? super A>*/> extends Compara
      * @return the fixed size of the serialized form in bytes or -1 if the size
      * is not fixed
      */
-    default int fixedSize() {
-        return -1;
-    }
+    int fixedSize();
 
     /**
      * Returns if this Serializer is trusted to always read the same number of
@@ -553,14 +551,10 @@ public interface Serializer<A /*extends Comparable<? super A>*/> extends Compara
      * @return if this Serializer is trusted to always read the same number of
      * bytes as it writes for any given object being serialized/de-serialized
      */
-    default boolean isTrusted() {
-        return false;
-    }
+    boolean isTrusted();
 
     @Override
-    default int compare(A first, A second) {
-        return ((Comparable) first).compareTo(second);
-    }
+    int compare(A first, A second);
 
     /**
      * Returns if the first and second arguments are equal to each other.
@@ -575,9 +569,7 @@ public interface Serializer<A /*extends Comparable<? super A>*/> extends Compara
      * @return if the first and second arguments are equal to each other
      * @see Object#equals(Object)
      */
-    default boolean equals(A first, A second) {
-        return Objects.equals(first, second);
-    }
+    boolean equals(A first, A second);
 
     /**
      * Returns a hash code of a given non-null argument. The output of the
@@ -590,18 +582,14 @@ public interface Serializer<A /*extends Comparable<? super A>*/> extends Compara
      * @see Object#hashCode
      * @throws NullPointerException if the provided object is null
      */
-    default int hashCode(@NotNull A o, int seed) {
-        return DataIO.intHash(o.hashCode() + seed);
-    }
+    int hashCode(@NotNull A o, int seed);
 
     /**
      * TODO: Document this method
      *
      * @return
      */
-    default boolean needsAvailableSizeHint() {
-        return false;
-    }
+    boolean needsAvailableSizeHint();
 
     /**
      * Deserializes and returns the content of the given long.
@@ -612,22 +600,10 @@ public interface Serializer<A /*extends Comparable<? super A>*/> extends Compara
      * @return the de-serialized content of the given long
      * @throws IOException in case of an I/O error
      */
-    default A deserializeFromLong(long input, int available) throws IOException {
-        if (CC.ASSERT && available < 0 || available > 8) {
-            throw new AssertionError();
-        }
-        byte[] b = new byte[available];
-        DataIO.putLong(b, 0, input, available);
-        return deserialize(new DataInput2.ByteArray(b), available);
-    }
+    A deserializeFromLong(long input, int available) throws IOException;
 
     /** Creates binary copy of given object. If the datatype is immutable the same instance might be returned */
-    default A clone(A value) throws IOException {
-        DataOutput2 out = new DataOutput2();
-        serialize(out, value);
-        DataInput2 in2 = new DataInput2.ByteArray(out.copyBytes());
-        return deserialize(in2, out.pos);
-    }
+    A clone(A value) throws IOException;
 
 //
 // TODO code from 2.0, perhaps it will be useful, do performance benchmarks etc

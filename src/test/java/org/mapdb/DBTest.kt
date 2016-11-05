@@ -69,7 +69,7 @@ class DBTest{
 
     @Test fun hashMap_create_unresolvable_serializer(){
         val db = DB(store =StoreTrivial(), storeOpened = false, isThreadSafe = false)
-        val unresolvable = object:Serializer<String>{
+        val unresolvable = object:SerializerBase<String>(){
             override fun deserialize(input: DataInput2, available: Int): String? {
                 throw UnsupportedOperationException()
             }
@@ -480,7 +480,7 @@ class DBTest{
 
     @Test fun hashSet_create_unresolvable_serializer(){
         val db = DB(store =StoreTrivial(), storeOpened = false, isThreadSafe = false)
-        val unresolvable = object:Serializer<String>{
+        val unresolvable = object:SerializerBase<String>(){
             override fun deserialize(input: DataInput2, available: Int): String? {
                 throw UnsupportedOperationException()
             }
@@ -1175,7 +1175,7 @@ class DBTest{
         f.delete()
     }
 
-    class NonSerializableSerializer(i:Int) : Serializer<String>{
+    class NonSerializableSerializer(i:Int) : SerializerBase<String>(){
         override fun deserialize(input: DataInput2, available: Int): String? {
             return input.readUTF()
         }

@@ -15,7 +15,7 @@ import java.util.Comparator;
 /**
  * Created by jan on 2/29/16.
  */
-public class SerializerByteArrayDelta2 implements GroupSerializer<byte[]> {
+public class SerializerByteArrayDelta2 extends GroupSerializerBase<byte[]> {
 
 
     @Override

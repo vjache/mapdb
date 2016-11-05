@@ -51,7 +51,7 @@ public final class Tuple {
     }
 
     static <E> E hiIfNull(E e){
-        return e==null ? HI() : e;
+        return e==null ? (E) HI() : e;
     }
 
     public static <A,B> Tuple2<A,B> t2(A a, B b) {

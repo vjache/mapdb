@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /** wraps another serializer and (de)compresses its output/input*/
-public final class SerializerCompressionWrapper<E> implements GroupSerializer<E>, Serializable {
+public final class SerializerCompressionWrapper<E> extends GroupSerializerBase<E> implements Serializable {
 
     private static final long serialVersionUID = 4440826457939614346L;
     protected final GroupSerializer<E> serializer;

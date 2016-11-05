@@ -12,7 +12,7 @@ import java.util.Comparator;
  *
  * It takes array of serializes in constructor parameter. All tuples (arrays) must have the same size.
  */
-public class SerializerArrayTuple implements GroupSerializer<Object[]>, DB.DBAware {
+public class SerializerArrayTuple extends GroupSerializerBase<Object[]> implements DB.DBAware {
 
     protected final Serializer[] ser;
     protected final Comparator[] comp;

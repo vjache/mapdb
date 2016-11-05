@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * Created by jan on 2/28/16.
  */
-public class SerializerUUID implements GroupSerializer<java.util.UUID> {
+public class SerializerUUID extends GroupSerializerBase<java.util.UUID> {
     @Override
     public void serialize(DataOutput2 out, UUID value) throws IOException {
         out.writeLong(value.getMostSignificantBits());

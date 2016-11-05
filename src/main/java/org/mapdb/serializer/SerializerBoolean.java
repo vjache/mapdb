@@ -11,7 +11,7 @@ import java.util.Comparator;
 /**
  * Created by jan on 2/28/16.
  */
-public class SerializerBoolean implements GroupSerializer<Boolean> {
+public class SerializerBoolean extends GroupSerializerBase<Boolean> {
 
     @Override
     public void serialize(DataOutput2 out, Boolean value) throws IOException {

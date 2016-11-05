@@ -12,31 +12,11 @@ import java.util.Comparator;
  */
 public interface GroupSerializer<A> extends Serializer<A> {
 
-    default A valueArrayBinaryGet(DataInput2 input, int keysLen, int pos) throws IOException {
-        Object keys = valueArrayDeserialize(input, keysLen);
-        return valueArrayGet(keys, pos);
-//        A a=null;
-//        while(pos-- >= 0){
-//            a = deserialize(input, -1);
-//        }
-//        return a;
-    }
+    A valueArrayBinaryGet(DataInput2 input, int keysLen, int pos) throws IOException;
 
 
 
-    default int valueArrayBinarySearch(A key, DataInput2 input, int keysLen, Comparator comparator) throws IOException {
-        Object keys = valueArrayDeserialize(input, keysLen);
-        return valueArraySearch(keys, key, comparator);
-//        for(int pos=0; pos<keysLen; pos++){
-//            A from = deserialize(input, -1);
-//            int comp = compare(key, from);
-//            if(comp==0)
-//                return pos;
-//            if(comp<0)
-//                return -(pos+1);
-//        }
-//        return -(keysLen+1);
-    }
+    int valueArrayBinarySearch(A key, DataInput2 input, int keysLen, Comparator comparator) throws IOException;
 
 
     int valueArraySearch(Object keys, A key);
@@ -64,18 +44,10 @@ public interface GroupSerializer<A> extends Serializer<A> {
 
     Object valueArrayDeleteValue(Object vals, int pos);
 
-    default Object[] valueArrayToArray(Object vals){
-        Object[] ret = new Object[valueArraySize(vals)];
-        for(int i=0;i<ret.length;i++){
-            ret[i] = valueArrayGet(vals,i);
-        }
-        return ret;
-    }
+    Object[] valueArrayToArray(Object vals);
 
 
     /** returns value+1, or null if there is no bigger value. */
-    default A nextValue(A value){
-        throw new UnsupportedOperationException("Next Value not supported");
-    }
+    A nextValue(A value);
 
 }

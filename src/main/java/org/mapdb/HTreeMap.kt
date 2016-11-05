@@ -158,7 +158,7 @@ class HTreeMap<K,V>(
     }
 
 
-    private fun leafValueInlineSerializer() = object: Serializer<Array<Any>>{
+    private fun leafValueInlineSerializer() = object: SerializerBase<Array<Any>>(){
         override fun serialize(out: DataOutput2, value: kotlin.Array<Any>) {
             out.packInt(value.size)
             for(i in 0 until value.size step 3) {
@@ -184,7 +184,7 @@ class HTreeMap<K,V>(
         }
     }
 
-    private fun leafKeySetSerializer() = object: Serializer<Array<Any>>{
+    private fun leafKeySetSerializer() = object: SerializerBase<Array<Any>>(){
         override fun serialize(out: DataOutput2, value: kotlin.Array<Any>) {
             out.packInt(value.size)
             for(i in 0 until value.size step 3) {
@@ -211,7 +211,7 @@ class HTreeMap<K,V>(
 
 
 
-    private fun leafValueExternalSerializer() = object: Serializer<Array<Any>>{
+    private fun leafValueExternalSerializer() = object: SerializerBase<Array<Any>>(){
         override fun serialize(out: DataOutput2, value: Array<Any>) {
             out.packInt(value.size)
             for(i in 0 until value.size step 3) {

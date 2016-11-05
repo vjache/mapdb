@@ -133,7 +133,7 @@ public class BTreeMapJava {
         }
     }
 
-    public static class NodeSerializer implements Serializer<Node>{
+    public static class NodeSerializer extends SerializerBase<Node>{
 
         final GroupSerializer keySerializer;
         final Comparator comparator;

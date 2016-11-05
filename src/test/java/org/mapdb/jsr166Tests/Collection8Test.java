@@ -24,74 +24,74 @@ import junit.framework.Test;
  * An extension of CollectionTest.
  */
 public abstract class Collection8Test extends JSR166TestCase {
-    final CollectionImplementation impl;
-
-    /** Tests are parameterized by a Collection implementation. */
-    Collection8Test(CollectionImplementation impl, String methodName) {
-        super(methodName);
-        this.impl = impl;
-    }
-
-    public static Test testSuite(CollectionImplementation impl) {
-        return parameterizedTestSuite(Collection8Test.class,
-                                      CollectionImplementation.class,
-                                      impl);
-    }
-
-    /**
-     * stream().forEach returns elements in the collection
-     */
-    public void testForEach() throws Throwable {
-        final Collection c = impl.emptyCollection();
-        final AtomicLong count = new AtomicLong(0L);
-        final Object x = impl.makeElement(1);
-        final Object y = impl.makeElement(2);
-        final ArrayList found = new ArrayList();
-        Consumer<Object> spy = (o) -> { found.add(o); };
-        c.stream().forEach(spy);
-        assertTrue(found.isEmpty());
-
-        assertTrue(c.add(x));
-        c.stream().forEach(spy);
-        assertEquals(Collections.singletonList(x), found);
-        found.clear();
-
-        assertTrue(c.add(y));
-        c.stream().forEach(spy);
-        assertEquals(2, found.size());
-        assertTrue(found.contains(x));
-        assertTrue(found.contains(y));
-        found.clear();
-
-        c.clear();
-        c.stream().forEach(spy);
-        assertTrue(found.isEmpty());
-    }
-
-    public void testForEachConcurrentStressTest() throws Throwable {
-        if (!impl.isConcurrent()) return;
-        final Collection c = impl.emptyCollection();
-        final long testDurationMillis = SHORT_DELAY_MS;
-        final AtomicBoolean done = new AtomicBoolean(false);
-        final Object elt = impl.makeElement(1);
-        ExecutorService pool = Executors.newCachedThreadPool();
-        Runnable checkElt = () -> {
-            while (!done.get())
-                c.stream().forEach((x) -> { assertSame(x, elt); }); };
-        Runnable addRemove = () -> {
-            while (!done.get()) {
-                assertTrue(c.add(elt));
-                assertTrue(c.remove(elt));
-            }};
-        Future<?> f1 = pool.submit(checkElt);
-        Future<?> f2 = pool.submit(addRemove);
-        Thread.sleep(testDurationMillis);
-        done.set(true);
-        pool.shutdown();
-        assertTrue(pool.awaitTermination(LONG_DELAY_MS, MILLISECONDS));
-        assertNull(f1.get(LONG_DELAY_MS, MILLISECONDS));
-        assertNull(f2.get(LONG_DELAY_MS, MILLISECONDS));
-    }
-
-    // public void testCollection8DebugFail() { fail(); }
+//    final CollectionImplementation impl;
+//
+//    /** Tests are parameterized by a Collection implementation. */
+//    Collection8Test(CollectionImplementation impl, String methodName) {
+//        super(methodName);
+//        this.impl = impl;
+//    }
+//
+//    public static Test testSuite(CollectionImplementation impl) {
+//        return parameterizedTestSuite(Collection8Test.class,
+//                                      CollectionImplementation.class,
+//                                      impl);
+//    }
+//
+//    /**
+//     * stream().forEach returns elements in the collection
+//     */
+//    public void testForEach() throws Throwable {
+//        final Collection c = impl.emptyCollection();
+//        final AtomicLong count = new AtomicLong(0L);
+//        final Object x = impl.makeElement(1);
+//        final Object y = impl.makeElement(2);
+//        final ArrayList found = new ArrayList();
+//        Consumer<Object> spy = (o) -> { found.add(o); };
+//        c.stream().forEach(spy);
+//        assertTrue(found.isEmpty());
+//
+//        assertTrue(c.add(x));
+//        c.stream().forEach(spy);
+//        assertEquals(Collections.singletonList(x), found);
+//        found.clear();
+//
+//        assertTrue(c.add(y));
+//        c.stream().forEach(spy);
+//        assertEquals(2, found.size());
+//        assertTrue(found.contains(x));
+//        assertTrue(found.contains(y));
+//        found.clear();
+//
+//        c.clear();
+//        c.stream().forEach(spy);
+//        assertTrue(found.isEmpty());
+//    }
+//
+//    public void testForEachConcurrentStressTest() throws Throwable {
+//        if (!impl.isConcurrent()) return;
+//        final Collection c = impl.emptyCollection();
+//        final long testDurationMillis = SHORT_DELAY_MS;
+//        final AtomicBoolean done = new AtomicBoolean(false);
+//        final Object elt = impl.makeElement(1);
+//        ExecutorService pool = Executors.newCachedThreadPool();
+//        Runnable checkElt = () -> {
+//            while (!done.get())
+//                c.stream().forEach((x) -> { assertSame(x, elt); }); };
+//        Runnable addRemove = () -> {
+//            while (!done.get()) {
+//                assertTrue(c.add(elt));
+//                assertTrue(c.remove(elt));
+//            }};
+//        Future<?> f1 = pool.submit(checkElt);
+//        Future<?> f2 = pool.submit(addRemove);
+//        Thread.sleep(testDurationMillis);
+//        done.set(true);
+//        pool.shutdown();
+//        assertTrue(pool.awaitTermination(LONG_DELAY_MS, MILLISECONDS));
+//        assertNull(f1.get(LONG_DELAY_MS, MILLISECONDS));
+//        assertNull(f2.get(LONG_DELAY_MS, MILLISECONDS));
+//    }
+//
+//    // public void testCollection8DebugFail() { fail(); }
 }

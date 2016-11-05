@@ -11,7 +11,7 @@ import java.util.Comparator;
 /**
  * Created by jan on 2/29/16.
  */
-public abstract class GroupSerializerObjectArray<A> implements GroupSerializer<A> {
+public abstract class GroupSerializerObjectArray<A> extends GroupSerializerBase<A> {
 
 
     @Override public void valueArraySerialize(DataOutput2 out, Object vals) throws IOException {

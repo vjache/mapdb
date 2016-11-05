@@ -11,7 +11,7 @@ import java.util.Comparator;
 /**
  * Created by jan on 2/28/16.
  */
-public abstract class SerializerFourByte<E> implements GroupSerializer<E> {
+public abstract class SerializerFourByte<E> extends GroupSerializerBase<E> {
 
     protected abstract E unpack(int l);
 

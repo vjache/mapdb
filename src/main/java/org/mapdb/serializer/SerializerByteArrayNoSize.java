@@ -3,6 +3,7 @@ package org.mapdb.serializer;
 import org.mapdb.DataInput2;
 import org.mapdb.DataOutput2;
 import org.mapdb.Serializer;
+import org.mapdb.SerializerBase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.Comparator;
 /**
  * Created by jan on 2/28/16.
  */
-public class SerializerByteArrayNoSize implements Serializer<byte[]> {
+public class SerializerByteArrayNoSize extends SerializerBase<byte[]> {
 
     @Override
     public void serialize(DataOutput2 out, byte[] value) throws IOException {
